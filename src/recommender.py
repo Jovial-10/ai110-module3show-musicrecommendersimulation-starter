@@ -63,6 +63,7 @@ def _score(
         score += GENRE_MATCH_POINTS
         reasons.append(f"genre match (+{GENRE_MATCH_POINTS:.2f})")
 
+    # Experiment: mood match disabled to see how rankings shift without it.
     if mood == favorite_mood:
         score += MOOD_MATCH_POINTS
         reasons.append(f"mood match (+{MOOD_MATCH_POINTS:.2f})")

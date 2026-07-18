@@ -11,21 +11,37 @@ You will implement the functions in recommender.py:
 
 from .recommender import load_songs, recommend_songs
 
+# Starter example profile
+STARTER_PROFILE = ("pop/happy", {"genre": "pop", "mood": "happy", "energy": 0.8})
 
-def main() -> None:
-    songs = load_songs("data/songs.csv") 
+# Edge case profiles designed to stress-test the Algorithm Recipe: each pairs
+# a favorite genre with attributes that genre's real songs in the catalog
+# don't actually have, so the genre-match bonus and the closeness terms end
+# up pulling the score in opposite directions.
+EDGE_CASE_PROFILES = [
+    ("Slow acoustic rock", {"genre": "rock", "mood": "relaxed", "energy": 0.25, "likes_acoustic": True}),
+    ("Low-energy pop", {"genre": "pop", "mood": "chill", "energy": 0.15, "likes_acoustic": True}),
+    ("Deep intense country", {"genre": "country", "mood": "intense", "energy": 0.85, "likes_acoustic": True}),
+]
 
-    # Starter example profile
-    user_prefs = {"genre": "pop", "mood": "happy", "energy": 0.8}
 
+def print_recommendations(label: str, user_prefs: dict, songs: list) -> None:
+    """Print the top 5 ranked recommendations for one user profile."""
     recommendations = recommend_songs(user_prefs, songs, k=5)
-
     profile_summary = ", ".join(f"{key}={value}" for key, value in user_prefs.items())
-    print(f"\nTop recommendations for {profile_summary}:\n")
+    print(f"\n=== {label} ({profile_summary}) ===\n")
     for rank, (song, score, explanation) in enumerate(recommendations, start=1):
         print(f"{rank}. {song['title']} - Score: {score:.2f}")
         print(f"   Reasons: {explanation}")
         print()
+
+
+def main() -> None:
+    songs = load_songs("data/songs.csv")
+
+    print_recommendations(*STARTER_PROFILE, songs)
+    for label, user_prefs in EDGE_CASE_PROFILES:
+        print_recommendations(label, user_prefs, songs)
 
 
 if __name__ == "__main__":

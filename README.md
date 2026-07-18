@@ -58,7 +58,6 @@ Ties go to whichever song's energy is closest to `target_energy`.
 
 **Potential bias:** genre carries the most weight, so the system can over-prioritize genre and bury a great mood/energy match that happens to sit in a genre the user didn't name as a favorite.
 
-You can include a simple diagram or bullet list if helpful.
 
 ---
 
@@ -124,13 +123,74 @@ Top recommendations for genre=pop, mood=happy, energy=0.8:
 
 ---
 
-## Experiments You Tried
+## Experiments
 
-Use this section to document the experiments you ran. For example:
+To stress-test the Algorithm Recipe, I ran three "edge case" profiles, each one pairing a favorite genre with attributes that genre's real songs in the catalog don't actually have — so the genre-match bonus and the closeness terms pull the score in opposite directions.
 
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+**Slow acoustic rock** (`genre=rock, mood=relaxed, energy=0.25, likes_acoustic=True`): the catalog's only rock song ("Storm Runner") is intense and non-acoustic, the opposite of this profile. Result: a relaxed, acoustic jazz song ("Coffee Shop Stories") outranks the only rock song entirely — genre alone wasn't enough to win.
+
+```
+=== Slow acoustic rock (genre=rock, mood=relaxed, energy=0.25, likes_acoustic=True) ===
+
+1. Coffee Shop Stories - Score: 3.21
+   Reasons: mood match (+1.00), energy similarity (+1.32), acoustic fit (+0.89)
+
+2. Storm Runner - Score: 2.61
+   Reasons: genre match (+2.00), energy similarity (+0.51), acoustic fit (+0.10)
+
+3. Glass Cathedral Sketch - Score: 2.47
+   Reasons: energy similarity (+1.50), acoustic fit (+0.97)
+
+4. Spacewalk Thoughts - Score: 2.38
+   Reasons: energy similarity (+1.46), acoustic fit (+0.92)
+
+5. Paper Boats - Score: 2.32
+   Reasons: energy similarity (+1.42), acoustic fit (+0.90)
+```
+
+**Low-energy pop** (`genre=pop, mood=chill, energy=0.15, likes_acoustic=True`): both pop songs in the catalog are high-energy and non-acoustic. Result: three chill/ambient/lofi songs outrank both real pop songs, which still cling to 4th and 5th place purely on the genre bonus.
+
+```
+=== Low-energy pop (genre=pop, mood=chill, energy=0.15, likes_acoustic=True) ===
+
+1. Spacewalk Thoughts - Score: 3.22
+   Reasons: mood match (+1.00), energy similarity (+1.30), acoustic fit (+0.92)
+
+2. Library Rain - Score: 3.06
+   Reasons: mood match (+1.00), energy similarity (+1.20), acoustic fit (+0.86)
+
+3. Midnight Coding - Score: 2.80
+   Reasons: mood match (+1.00), energy similarity (+1.09), acoustic fit (+0.71)
+
+4. Sunrise City - Score: 2.68
+   Reasons: genre match (+2.00), energy similarity (+0.50), acoustic fit (+0.18)
+
+5. Gym Hero - Score: 2.38
+   Reasons: genre match (+2.00), energy similarity (+0.33)
+```
+
+**Deep intense country** (`genre=country, mood=intense, energy=0.85, likes_acoustic=True`): this profile is internally contradictory — in this dataset, high energy and high acousticness are inversely correlated (the loudest songs are all electric), so no song can satisfy both halves at once. Result: the sole country song ("Dust Road Ballad") still wins on genre alone despite a mood mismatch, and the runners-up are unrelated high-energy songs that at least partly match the mood.
+
+```
+=== Deep intense country (genre=country, mood=intense, energy=0.85, likes_acoustic=True) ===
+
+1. Dust Road Ballad - Score: 3.55
+   Reasons: genre match (+2.00), energy similarity (+0.90), acoustic fit (+0.65)
+
+2. Storm Runner - Score: 2.51
+   Reasons: mood match (+1.00), energy similarity (+1.41), acoustic fit (+0.10)
+
+3. Gym Hero - Score: 2.43
+   Reasons: mood match (+1.00), energy similarity (+1.38)
+
+4. Tidewalker - Score: 1.75
+   Reasons: energy similarity (+1.50), acoustic fit (+0.25)
+
+5. Rooftop Lights - Score: 1.71
+   Reasons: energy similarity (+1.36), acoustic fit (+0.35)
+```
+
+**Takeaway:** the genre bonus (+2.0) is large enough to guarantee the catalog's only song in a favorite genre always lands in the top 5, even when every other attribute is a poor match — but it's not always large enough to make that song rank #1 if a different genre fits the closeness terms much better.
 
 ---
 
