@@ -3,7 +3,7 @@
 ## 1. Model Name  
 
 Give your model a short, descriptive name.  
-Example: **VibeFinder 1.0**  
+Example: **Symphony**  
 
 ---
 
@@ -16,6 +16,8 @@ Prompts:
 - What kind of recommendations does it generate  
 - What assumptions does it make about the user  
 - Is this for real users or classroom exploration  
+
+The recommender is a system designed to recommend users songs that they would like according to their distinct musical preferences. This isn't for real users because it was trained on a very small dataset and does not have enough data variety to support real recommendations.
 
 ---
 
@@ -32,6 +34,8 @@ Prompts:
 
 Avoid code here. Pretend you are explaining the idea to a friend who does not program.
 
+To score songs, features such as genre, energy, mood, and if the user likes acoustic are used with different weights to match songs in a datset to target songs that a user enjoys. Changes have been made from the starter logic so that the new scoring logic has more depth and weights for features that I think are more important like genre and mood. 
+
 ---
 
 ## 4. Data  
@@ -45,6 +49,8 @@ Prompts:
 - Did you add or remove data  
 - Are there parts of musical taste missing in the dataset  
 
+The original datset was very small and only started with 10 songs. Since then, 10 more have been added and the songs represent a variety of different genres and moods. Music is very diverse so the small dataset cannot accurately represent musical taste.
+
 ---
 
 ## 5. Strengths  
@@ -56,6 +62,8 @@ Prompts:
 - User types for which it gives reasonable results  
 - Any patterns you think your scoring captures correctly  
 - Cases where the recommendations matched your intuition  
+
+The system seemed to work well for songs that had easier, more common genres. I think it picks up on genre and mood patterns very well because of their higher weight. 
 
 ---
 
@@ -92,6 +100,9 @@ Prompts:
 - Improving diversity among the top results  
 - Handling more complex user tastes  
 
+Add a lot more data so that the recommender can train and handle much more unique user profiles. The recommendations could also be more personalized and unique. 
+
+
 ---
 
 ## 9. Personal Reflection  
@@ -103,3 +114,5 @@ Prompts:
 - What you learned about recommender systems  
 - Something unexpected or interesting you discovered  
 - How this changed the way you think about music recommendation apps  
+
+Reflecting on this experience, I learned a lot more about the logic behind recommendation systems. My biggest learning moment during this project was the importance of having a diverse dataset. Systems like these will always have a lot of users which means a lot of unique musical preferences. Edge case user profiles will show up a lot so it is important to have a dataset that represents a wide variety of people. Claude Code helped me brainstorm, learn new concepts, and program effeciently so that my ideas became tangible code. Simple algorithms can still feel like recommendations because the logic behind it is what matters. Making the score weight of more important aspects will help recommend more accurately. If the project was extended, I was try getting a much larger datset, so that I could make a more comprehensive and representative recommender with more thorough scoring logic.

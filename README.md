@@ -214,10 +214,8 @@ Read and complete `model_card.md`:
 
 [**Model Card**](model_card.md)
 
-Write 1 to 2 paragraphs here about what you learned:
+What I learned:
 
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
-
-
+- **How recommenders turn data into predictions:** Recommenders turn data into predictions by comparing what a user says they like (genre, mood, energy, etc.) against each song's own attributes and adding up points for how closely they match. Even a simple, rule-based system like this one can feel like a real recommendation, because the scoring logic is what decides what matters most. Giving genre and mood more weight made the picks feel a lot closer to what a real listener would actually want.
+- **Where bias or unfairness could show up:** Bias shows up here because the dataset is small and uneven — some genres have a few songs while most only have one, so fans of those genres always get the same limited pick no matter how well it actually fits. This showed me that real systems will always deal with a huge range of unique user profiles, so the dataset itself needs to represent that same diversity, not just the scoring logic.
 
